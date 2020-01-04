@@ -1,0 +1,9 @@
+main()
+{
+	int abc;
+	while()
+	{
+
+	}
+	return 0;
+}

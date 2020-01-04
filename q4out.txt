@@ -1,0 +1,6 @@
+1 #include a
+2 #include b
+3 
+4 abc 
+5 #w
+6 c  f
