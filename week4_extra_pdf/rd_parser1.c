@@ -7,26 +7,25 @@ int S(Analyzer* a)
 {
 	Token token = get_next_token(a);
 
-	if (token.type == T_IDENTIFIER)
+	if (token.type == T_IDENTIFIER || token.type == T_LOGICAL_OPERATOR)
 	{
 		printf("%s ", token.lexeme);
 		return 1;
 	}
-	else if (token.type == T_LOGICAL_OPERATOR)	
+	else if (strcmp(token.lexeme, "(") == 0)
 	{
-		printf("%s\n", token.lexeme);
-		return 1;
-	}
-	else if (token.type == T_SPECIAL)
-	{
-		printf("%s\n", token.lexeme);
+		printf("%s ", token.lexeme);
 		int flag = T(a);
 		
 		if (flag)
 		{
 			token = get_next_token(a);
-			if (token.type == T_SPECIAL)
+
+			if (strcmp(token.lexeme, ")") == 0)
+			{
+				printf("%s ", token.lexeme);
 				return 1;
+			}
 			else
 				return 0;
 		}
@@ -39,34 +38,28 @@ int S(Analyzer* a)
 
 int T(Analyzer* a)
 {
-	// Token token = get_next_token(a);
-	// printf("Debug: In T: Got next token\n");
+	Token token;
 
-	// int flag = 0;
-
-	// //recursively check for T,S
-	// if (T(a))
-	// {
-	// 	printf("Debug: Checking T\n");
-	// 	token = get_next_token(a);
-	// 	if (token.type == T_SPECIAL)
-	// 	{
-	// 		printf("Debug: Comma encountered\n");
-	// 		if (S(a))
-	// 			return 1;
-	// 		else
-	// 			return 0;
-	// 	}
-	// 	else
-	// 		return 0;
-	// }
-	// else if (S(a))
-	// {
-	// 	printf("Debug: Checking S\n");
-	// 	return 1;
-	// }
-	// else
-	// 	return 0;
+	if (S(a))
+	{
+		token = get_next_token(a);
+		if (strcmp(token.lexeme, ",") == 0)
+		{
+			printf("%s ", token.lexeme);
+			if (T(a))
+				return 1;
+		}
+		else
+		{
+			unreadc(token.lexeme[0], a);
+			return 1;
+		}
+	}	
+	else
+	{
+		return 0;
+	}
+	
 }
 
 int parse(FILE* inp_file)
