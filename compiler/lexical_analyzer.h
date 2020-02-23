@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include "types.h"
+//#include "types.h"
+
+enum tokenType{
+    T_IDENTIFIER, T_KEYWORD, T_SPECIAL, T_ARITHMETIC_OPERATOR, T_LOGICAL_OPERATOR,
+    T_ASSIGNMENT, T_CONST, T_EOF
+};
+
+char* token_names[] = {"T_IDENTIFIER", "T_KEYWORD", "T_SPECIAL", "T_ARITHMETIC_OPERATOR", "T_LOGICAL_OPERATOR", 
+    "T_ASSIGNMENT", "T_CONST", "T_EOF"        
+};
 
 typedef struct token Token;
 typedef struct analyzer Analyzer;
@@ -45,8 +54,8 @@ int is_logical_operator(char ch){
 
 int is_keyword(char* word){
     char keywords[][10] = {"int", "float", "char", "void", "double", "long", "unsigned", "short", "if", "else", "while", "for", "do", "return", "sizeof",
-    "typedef", "enum", "union", "asm", "break", "class"};
-    int num_keywords = 22;
+    "typedef", "enum", "union", "asm", "break"};
+    int num_keywords = 21;
     for(int i=0;i<num_keywords; ++i) if(!strcmp(keywords[i], word)) return 1;
     return 0;
 }

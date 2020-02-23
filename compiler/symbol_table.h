@@ -42,7 +42,7 @@ TableEntry make_tableEntry(int type, int idx){
     return t;
 }
 
-void insert_symbol(Symbol ** table, Symbol** tail, Symbol* sym){
+void insert_symbol(Symbol** table, Symbol** tail, Symbol* sym){
 	sym->prev = *tail;
 	if(*tail)
 		(*tail)->next = sym;

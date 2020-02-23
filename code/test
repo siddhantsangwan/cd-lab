@@ -1,8 +1,0 @@
-class B {
-	s:char <- "Hello";
-	a:int = 123;
-
-	g(y:char):int{
-		concat(s)
-	};
-};
