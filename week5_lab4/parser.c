@@ -110,7 +110,10 @@ int identifier_list(Analyzer* a)
             if (identifier_list(a))
                 return 1;
             else
+            {
+                unread_word(token.lexeme, a);   
                 return 0;
+            }
         }
         else if (strcmp(token.lexeme, ";") == 0)
         {
