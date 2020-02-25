@@ -119,6 +119,17 @@ void read_word(Analyzer* a, char* word, int* len){
     word[*len] = 0;
 }
 
+void unread_word(char* word, Analyzer* a)
+{
+    int len = strlen(word);
+
+    while (len != 0)
+    {
+        unreadc(word[len -1], a);
+        len--;
+    }
+}
+
 void read_string(Analyzer* a){
     char ch;
     int state = 0;
