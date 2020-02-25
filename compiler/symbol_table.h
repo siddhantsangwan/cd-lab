@@ -8,7 +8,7 @@ typedef enum scope Scope;
 enum dataType{ TYPE_CHAR, TYPE_INT, TYPE_FLOAT, TYPE_DOUBLE, TYPE_VOID, TYPE_FUNC};
 enum scope{ SCOPE_LOCAL, SCOPE_GLOBAL };
 
-char type_strings[][10] = {"CHAR", "INT", "FLOAT", "DOUBLE", "VOID", "FUNC"};
+char type_strings[][10] = {"char", "int", "float", "double", "void", "func"};
 char scope_strings[][10] = {"LOCAL", "GLOBAL"};
 int type_size[] = {1, 4, 8, 16, 0, 0};
 
@@ -62,6 +62,26 @@ void add_args(Symbol* sym, TableEntry* arg){
     }
 }
 
+int check_DataType(Token token){
+	if(!strcmp(token.lexeme, "int")){
+		return TYPE_INT;
+	}
+	else if(!strcmp(token.lexeme, "char")){
+		return TYPE_CHAR;
+	}
+	else if(!strcmp(token.lexeme, "float")){
+		return TYPE_FLOAT;
+	}
+	else if(!strcmp(token.lexeme, "double")){
+		return TYPE_DOUBLE;
+	}
+	else if(!strcmp(token.lexeme, "void")){
+		return TYPE_VOID;
+	}
+	else
+		return -1;		
+}
+
 Symbol* make_table(FILE* input_file){
 	int row=1, col=1, idx=1;
 	int found_kword = 0, found_identifier=0, in_header=0;
@@ -77,21 +97,24 @@ Symbol* make_table(FILE* input_file){
 		token = get_next_token(&a);
 		if(token.type == T_KEYWORD){
 			found_kword = 1;
-			if(!strcmp(token.lexeme, "int")){
-				type = TYPE_INT;
-			}
-			else if(!strcmp(token.lexeme, "char")){
-				type = TYPE_CHAR;
-			}
-			else if(!strcmp(token.lexeme, "float")){
-				type = TYPE_FLOAT;
-			}
-			else if(!strcmp(token.lexeme, "double")){
-				type = TYPE_DOUBLE;
-			}
-			else if(!strcmp(token.lexeme, "void")){
-				type = TYPE_VOID;
-			}
+			// if(!strcmp(token.lexeme, "int")){
+			// 	type = TYPE_INT;
+			// }
+			// else if(!strcmp(token.lexeme, "char")){
+			// 	type = TYPE_CHAR;
+			// }
+			// else if(!strcmp(token.lexeme, "float")){
+			// 	type = TYPE_FLOAT;
+			// }
+			// else if(!strcmp(token.lexeme, "double")){
+			// 	type = TYPE_DOUBLE;
+			// }
+			// else if(!strcmp(token.lexeme, "void")){
+			// 	type = TYPE_VOID;
+			// }
+			int checked_type = check_DataType(token);
+			if (checked_type > -1)
+				type = checked_type;
 			else found_kword = 0;
 		}
 		else if(token.type == T_IDENTIFIER){
